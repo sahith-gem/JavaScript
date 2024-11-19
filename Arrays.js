@@ -15,4 +15,8 @@ console.log(value);
 function returnUndedined(val){
     let name =val;
 }
+let g = () => ({
+    value: 26
+});
+console.log(g());
 console.log(returnUndedined(20));
