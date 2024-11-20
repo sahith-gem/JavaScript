@@ -16,7 +16,8 @@ function returnUndedined(val){
     let name =val;
 }
 let g = () => ({
-    value: 26
+    value: 26,
+    og:'hello',
 });
-console.log(g());
-console.log(returnUndedined(20));
+console.log(g().og);
+console.log(returnUndedined());
