@@ -21,3 +21,14 @@ let g = () => ({
 });
 console.log(g().og);
 console.log(returnUndedined());
+//Even or Odd 
+function Even (array1 ) {
+for(const val of array1){
+    if(val%2==0){
+        console.log('Even number :'+val)
+    }else{
+        console.log('Odd number :'+val)
+    }
+}
+}
+Even([1,2,3,4,5,6,7,8,9,10])
