@@ -133,4 +133,4 @@ let averageMovieRatings = MovieRatings.map((movie) => {
     return {title: movie.title ,  averageRatings : average.toFixed(2)};
 })
 
-console.log(averageMovieRatings)
+console.log(averageMovieRatings) 
