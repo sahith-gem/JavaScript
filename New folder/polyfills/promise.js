@@ -15,6 +15,9 @@ class MyPromise {
         this._state ='pending';
         this._successCallbacks =[];
         this._errorCallbacks =[];
+        this._finallyCallbacks =[];
+        this.value = undefined;
+
         executorFunction(
             this.resolverFunction.bind(this),
             this.rejectorFunction.bind(this)
@@ -23,32 +26,62 @@ class MyPromise {
     }
 
     then(callback){
+        if(this._state=='resolved'){
+            callback(this.value);
+            return this;
+        }
         this._successCallbacks.push(callback)
         return this
     }
 
     catch(callback){
+        if(this._state=='rejected'){
+            callback(this.value);
+            return this;
+        }
         this._errorCallbacks.push(callback)
         return this;
     }
 
-    resolverFunction(){
+    finally(callback){
+        if(this._state!=='pending'){
+            callback()
+        }
+        this._finallyCallbacks.push(callback);
+        return this;
+    }
+    //provide the parameter to the function call
+    resolverFunction(value){
+       
+        this.value=value
         this._state='resolved';
-        this._successCallbacks.forEach((cb)=>cb())
+        this._successCallbacks.forEach((cb)=>cb(value))
+        this._finallyCallbacks.forEach((cb)=>cb())
     }
 
-    rejectorFunction(){
+    rejectorFunction(value){
+        this.value=value;
         this._state='rejected';
-        this._errorCallbacks.forEach((cb)=>cb());
+        this._errorCallbacks.forEach((cb)=>cb(value));
+        this._finallyCallbacks.forEach((cb)=>cb());
     }
 }
 
 function wait(seconds){
     const p = new MyPromise((resolve,reject)=>{
-        setTimeout(()=>resolve(),seconds*1000)
+        resolve("haaa")
     })
 
     return p;
 }
 
-wait(5).then(()=>console.log('first then')).then(()=>console.log('Second then'))
+const p = wait(5)
+
+console.log('Registering then callbacks ')
+
+    p.then((e)=>console.log('first then',e))
+    .then(()=>{console.log('Second then');return "retured value"})
+    .catch((e)=>console.log("Promise rejected",e))
+    .finally(()=>console.log("i will execute anyway"))
+    
+//Partiall
