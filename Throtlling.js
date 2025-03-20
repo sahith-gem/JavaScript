@@ -1,14 +1,14 @@
-function Throttle(fn , delay){
+function Throttle(fn, delay) {
     let timer = null;
 
-    return function(...args){
-        if(timer===null){
+    return function (...args) {
+        if (timer===null) {
             fn(...args);
-            setTimeout(()=>{
-                timer=null
-            },delay)
+          timer = setTimeout(() => {
+                timer = null; // Reset timer after delay
+            }, delay);
         }
-    }
+    };
 }
 
 function greet(name){
@@ -17,6 +17,6 @@ function greet(name){
 const ref = Throttle(()=>greet('James'),3000)
 
 ref()
-setTimeout(()=>ref(),1000)
-
-setTimeout(()=>ref(),4000)
+ref()
+ref()
+ref()
