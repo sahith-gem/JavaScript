@@ -46,6 +46,7 @@ allBoards.forEach((board)=>{
         const flyingElement = document.querySelector('.flying');
         board.appendChild(flyingElement)
         console.log('flying')
+        
     })
 })
 
